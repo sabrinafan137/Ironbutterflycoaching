@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>THz Tera‑P90+ | Book a Free Session</title>
+  <style>
+    :root{
+      --bg0:#050A10;--bg1:#061018;--bg2:#071826;
+      --card:rgba(255,255,255,.06);--stroke:rgba(255,255,255,.12);
+      --text:#EAF2FF;--muted:rgba(234,242,255,.72);--muted2:rgba(234,242,255,.55);
+      --accent:#79F2C0;--accent2:#6BA7FF;
+      --shadow:0 20px 70px rgba(0,0,0,.55);
+      --max:1120px;
+      --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    }
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;font-family:var(--font);color:var(--text);
+      background:
+        radial-gradient(1200px 900px at 15% -10%,rgba(107,167,255,.22),transparent 60%),
+        radial-gradient(900px 700px at 90% 20%,rgba(121,242,192,.18),transparent 55%),
+        radial-gradient(700px 500px at 60% 110%,rgba(255,211,107,.10),transparent 55%),
+        linear-gradient(180deg,var(--bg0),var(--bg1) 45%,var(--bg2));
+      overflow-x:hidden;
+    }
+    main{scroll-snap-type:y proximity;}
+    section{
+      scroll-snap-align:start;min-height:100vh;
+      display:flex;align-items:center;
+      padding:86px 20px;position:relative;
+    }
+    a{color:inherit;text-decoration:none;}
+    .wrap{width:100%;max-width:var(--max);margin:0 auto;}
+
+    /* NAV */
+    .nav{position:fixed;inset:14px 14px auto 14px;z-index:50;display:flex;justify-content:center;pointer-events:none;}
+    .navInner{
+      pointer-events:auto;width:min(var(--max),100%);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 14px;border-radius:999px;
+      background:rgba(10,18,28,.55);border:1px solid rgba(255,255,255,.10);
+      backdrop-filter:blur(14px);box-shadow:0 10px 40px rgba(0,0,0,.35);
+    }
+    .brand{display:flex;gap:10px;align-items:center;font-weight:700;}
+    .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 18px rgba(121,242,192,.45);}
+    .links{display:flex;gap:14px;align-items:center;}
+    .links a{font-size:13px;color:var(--muted);padding:8px 10px;border-radius:999px;transition:all .2s;}
+    .links a:hover{color:var(--text);background:rgba(255,255,255,.06);}
+
+    /* BUTTONS */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:13px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);color:var(--text);font-weight:700;
+      transition:transform .15s,background .2s,border .2s;user-select:none;cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09);}
+    .btnP{
+      background:linear-gradient(135deg,rgba(121,242,192,.95),rgba(107,167,255,.95));
+      border:0;color:#041019;
+      box-shadow:0 18px 60px rgba(107,167,255,.22),0 14px 50px rgba(121,242,192,.18);
+    }
+    .btnP:hover{transform:translateY(-2px);filter:saturate(1.05);}
+
+    /* GRID + CARDS */
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:start;}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    @media(max-width:900px){
+      .grid,.grid3,.grid2{grid-template-columns:1fr;}
+      section{min-height:auto;padding:92px 18px;}
+      .links{display:none;}
+    }
+    .card{
+      border-radius:32px;background:var(--card);
+      border:1px solid var(--stroke);backdrop-filter:blur(16px);
+      box-shadow:var(--shadow);overflow:hidden;
+    }
+    .cp{padding:26px;}
+    .pill{
+      display:inline-flex;gap:10px;align-items:center;
+      padding:8px 12px;border-radius:999px;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+      color:var(--muted);font-size:13px;
+    }
+    h1{margin:14px 0 10px;font-size:clamp(34px,4.2vw,58px);line-height:1.05;letter-spacing:-.7px;}
+    h2{margin:0 0 10px;font-size:clamp(26px,3vw,38px);letter-spacing:-.5px;line-height:1.1;}
+    h3{margin:0 0 8px;font-size:18px;letter-spacing:-.2px;}
+    p{margin:0 0 12px;color:var(--muted);line-height:1.6;}
+    .kicker{color:var(--muted2);font-size:13px;margin-top:4px;}
+    .list{display:grid;gap:10px;margin-top:14px;}
+    .li{
+      display:flex;gap:12px;align-items:flex-start;
+      padding:12px 14px;border-radius:16px;
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);
+    }
+    .tick{
+      width:22px;height:22px;flex:0 0 22px;border-radius:8px;
+      background:linear-gradient(135deg,rgba(121,242,192,.22),rgba(107,167,255,.20));
+      border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;margin-top:1px;
+      font-size:12px;
+    }
+    .fine{color:rgba(234,242,255,.45);font-size:12px;line-height:1.5;margin-top:12px;}
+    .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+
+    /* HERO CHROME VISUAL */
+    .chrome{
+      position:relative;aspect-ratio:10/12;border-radius:34px;
+      background:
+        radial-gradient(700px 500px at 30% 10%,rgba(121,242,192,.22),transparent 55%),
+        radial-gradient(800px 600px at 80% 30%,rgba(107,167,255,.26),transparent 55%),
+        linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.14);overflow:hidden;
+      box-shadow:0 30px 120px rgba(0,0,0,.55);
+    }
+    .orb{
+      position:absolute;width:240px;height:240px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.35),rgba(255,255,255,0) 55%),
+                 radial-gradient(circle at 60% 65%,rgba(107,167,255,.25),rgba(107,167,255,0) 60%);
+      filter:blur(.2px);opacity:.85;mix-blend-mode:screen;
+      animation:floaty 6.5s ease-in-out infinite;
+    }
+    .o1{top:16%;left:10%;animation-delay:.1s;}
+    .o2{top:45%;left:55%;width:280px;height:280px;animation-delay:1.2s;}
+    .o3{top:65%;left:15%;width:200px;height:200px;animation-delay:2.4s;opacity:.65;}
+    @keyframes floaty{0%,100%{transform:translate3d(0,0,0);}50%{transform:translate3d(0,-16px,0);}}
+    .chromeContent{
+      position:absolute;inset:20px;border-radius:26px;
+      border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.22);
+      backdrop-filter:blur(10px);padding:18px;
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .statRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .stat{padding:12px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);}
+    .stat .big{font-weight:800;font-size:18px;letter-spacing:-.2px;}
+    .stat .sm{color:var(--muted2);font-size:12px;margin-top:4px;line-height:1.35;}
+    .tagline{display:flex;gap:10px;align-items:center;margin-top:14px;color:var(--muted2);font-size:13px;}
+    .bar{height:1px;flex:1;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.20),rgba(255,255,255,0));}
+
+    /* STICKY CTA */
+    .ctaBar{position:fixed;left:14px;right:14px;bottom:14px;z-index:60;display:flex;justify-content:center;pointer-events:none;}
+    .ctaInner{
+      pointer-events:auto;width:min(var(--max),100%);
+      display:flex;gap:12px;align-items:center;justify-content:space-between;
+      padding:12px 14px;border-radius:999px;
+      background:rgba(10,18,28,.62);border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(14px);box-shadow:0 14px 50px rgba(0,0,0,.4);
+    }
+    .ctaInner .lt{display:flex;flex-direction:column;gap:2px;}
+    .ctaInner .lt .t{font-weight:800;letter-spacing:-.2px;}
+    .ctaInner .lt .s{font-size:12px;color:var(--muted2);}
+    @media(max-width:680px){.ctaInner .lt .s{display:none;}}
+
+    /* TESTIMONIALS */
+    .tcard{
+      border-radius:22px;padding:20px;
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);
+    }
+    .stars{color:var(--accent);font-size:14px;margin-bottom:8px;}
+    .tname{font-size:13px;color:var(--muted2);margin-top:10px;}
+
+    /* CALENDAR */
+    .calWrap{
+      border-radius:28px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      min-height:600px;display:flex;flex-direction:column;
+    }
+    .calHeader{
+      padding:20px 24px;
+      background:linear-gradient(135deg,rgba(121,242,192,.12),rgba(107,167,255,.12));
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .calBody{flex:1;display:flex;align-items:center;justify-content:center;padding:0;}
+    .calBody iframe{width:100%;height:600px;border:0;}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.in{opacity:1;transform:translateY(0);}
+
+    /* PROGRESS BAR */
+    #progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:100;transition:width .1s;}
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="navInner">
+    <div class="brand"><div class="dot"></div><span>Iron Butterfly Coaching</span></div>
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#family">Family</a>
+      <a href="#testimonials">Stories</a>
+      <a href="#roi">ROI</a>
+      <a href="#book">Book</a>
+    </div>
+    <a class="btn btnP" href="#book">Book free session</a>
+  </div>
+</div>
+
+<!-- STICKY CTA -->
+<div class="ctaBar">
+  <div class="ctaInner">
+    <div class="lt">
+      <div class="t">Free THz Tera‑P90+ session</div>
+      <div class="s">Feel internal warming + PEMF + THz in one visit • Costa Mesa CA 92626</div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <a class="btn" href="#how">How it works</a>
+      <a class="btn btnP" href="#book">Book now</a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<section id="top">
+  <div class="wrap">
+    <div class="grid">
+      <div class="card reveal">
+        <div class="cp">
+          <div class="pill">🌍 PEMF + Terahertz + Internal Thermal Circulation</div>
+          <h1>Internal heat penetration—<em>without</em> the sauna.</h1>
+          <p>
+            Sauna heats you from the <strong>outside in</strong>—ambient air, surface sweat, enclosed heat.
+            The <strong>THz Tera‑P90+</strong> is engineered to create a <strong>deep internal warming effect</strong>
+            through the feet, supporting thermal circulation, vasodilation, and whole-body relaxation—
+            while you sit comfortably, fully clothed, breathing normally.
+          </p>
+
+          <div class="grid2" style="margin-top:16px;">
+            <div class="li">
+              <div class="tick">🔥</div>
+              <div><strong>Sauna</strong><div class="kicker">Ambient heat. Whole-body sweating. Enclosed room. Intense for many.</div></div>
+            </div>
+            <div class="li" style="border-color:rgba(121,242,192,.3);background:rgba(121,242,192,.06);">
+              <div class="tick">⚡</div>
+              <div><strong>THz Tera‑P90+</strong><div class="kicker">Internal warming via feet. Balanced energy release. Comfortable. Adjustable.</div></div>
+            </div>
+          </div>
+
+          <div class="list">
+            <div class="li">
+              <div class="tick">✓</div>
+              <div><strong>1MHz high-frequency pulse current</strong><div class="kicker">Creates an internal heating effect + pulsed electromagnetic field (PEMF) through tissues.</div></div>
+            </div>
+            <div class="li">
+              <div class="tick">✓</div>
+              <div><strong>Terahertz waves (~3–5 cm penetration)</strong><div class="kicker">Designed to resonate with cells and support circulation, vitality, and cellular energy.</div></div>
+            </div>
+            <div class="li">
+              <div class="tick">✓</div>
+              <div><strong>Balanced energy release + safety design</strong><div class="kicker">T5A 250V fuse protection. 20 intensity levels. 304 stainless steel pedal.</div></div>
+            </div>
+          </div>
+
+          <div class="ctas">
+            <a class="btn btnP" href="#book">Book your free session →</a>
+            <a class="btn" href="#how">See how it works ↓</a>
+          </div>
+          <div class="fine">Wellness support technology. Not medical advice. Individual experiences vary. Consult a clinician if you have implants or medical conditions.</div>
+        </div>
+      </div>
+
+      <div class="chrome reveal">
+        <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+        <div class="chromeContent">
+          <div>
+            <div class="pill">Iron Butterfly Coaching</div>
+            <div class="tagline"><span class="bar"></span><span>THE MAGNETIC REBOOT</span><span class="bar"></span></div>
+          </div>
+          <div class="statRow">
+            <div class="stat"><div class="big">20 levels</div><div class="sm">Personalized intensity for every body.</div></div>
+            <div class="stat"><div class="big">3–5 cm</div><div class="sm">THz wave penetration depth.</div></div>
+            <div class="stat"><div class="big">304 steel</div><div class="sm">Premium brushed foot pedal.</div></div>
+            <div class="stat"><div class="big">Whole home</div><div class="sm">Multi-user. One investment.</div></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;">
+            <div class="kicker">Try it once. Feel why it's different.</div>
+            <a class="btn btnP" href="#book">Book</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="grid">
+      <div class="card reveal">
+        <div class="cp">
+          <div class="pill">⚡ The mechanism (plain English)</div>
+          <h2>How the "magnetic reboot" actually works</h2>
+          <p>Three technologies stacked into one foot-based session.</p>
+          <div class="list">
+            <div class="li"><div class="tick">1</div><div><strong>Foot transmission → deep thermal circulation</strong><div class="kicker">Energy is transferred through the feet, rapidly warming water molecules and ions to support vasodilation and thermal circulation.</div></div></div>
+            <div class="li"><div class="tick">2</div><div><strong>PEMF field → cellular activity support</strong><div class="kicker">1MHz pulse current generates a pulsed electromagnetic field described to influence ion movement and metabolism support.</div></div></div>
+            <div class="li"><div class="tick">3</div><div><strong>Terahertz output → resonance amplification</strong><div class="kicker">THz waves resonate with cells at a biological frequency, described to support circulation and energy.</div></div></div>
+            <div class="li"><div class="tick">+</div><div><strong>Add-on devices (included)</strong><div class="kicker">Massager (TENS + EMS + red light) + beauty device for a complete head-to-toe routine.</div></div></div>
+          </div>
+          <div class="ctas">
+            <a class="btn" href="#benefits">Show me benefits ↓</a>
+            <a class="btn btnP" href="#book">Book free session</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="cp">
+          <h3>Why this beats "just heat"</h3>
+          <p>Sauna is one-dimensional. The P90+ is positioned as a platform.</p>
+          <div class="list">
+            <div class="li"><div class="tick">✓</div><div><strong>Comfortable, even feel</strong><div class="kicker">Balanced energy release—reduced localized overheating discomfort.</div></div></div>
+            <div class="li"><div class="tick">✓</div><div><strong>Fully clothed, seated</strong><div class="kicker">Use it while watching TV, reading, or winding down.</div></div></div>
+            <div class="li"><div class="tick">✓</div><div><strong>Adjustable for every body</strong><div class="kicker">20 intensity levels + remote control.</div></div></div>
+            <div class="li"><div class="tick">✓</div><div><strong>Multi-device stack</strong><div class="kicker">Foot board + massager + beauty device in one routine.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="cp">
+        <div class="pill">💎 What you'll actually feel</div>
+        <h2>Benefits people come back for</h2>
+        <p>Many people feel warmth + relaxation in the first session. Consistency compounds results.</p>
+        <div class="grid3">
+          <div class="tcard"><h3>🔥 Deep relaxation</h3><p>Muscles release. Tension drops. Body shifts into recovery mode.</p></div>
+          <div class="tcard"><h3>🩸 Circulation support</h3><p>Designed to support vasodilation and blood flow—especially for cold hands and feet.</p></div>
+          <div class="tcard"><h3>💤 Sleep support</h3><p>Many use it as a pre-bed ritual to unwind and sleep deeper.</p></div>
+          <div class="tcard"><h3>🏃 Recovery</h3><p>Post-workout reset. Supports comfort from stiffness and soreness.</p></div>
+          <div class="tcard"><h3>⚡ Vitality</h3><p>Supports energy and metabolism. Many report calm alertness.</p></div>
+          <div class="tcard"><h3>✨ Beauty add-on</h3><p>Included beauty device supports tightening + collagen routines.</p></div>
+        </div>
+        <div class="ctas">
+          <a class="btn" href="#family">Whole family ↓</a>
+          <a class="btn btnP" href="#book">Book free session</a>
+        </div>
+        <div class="fine">Wellness support language only. Not claims to diagnose, treat, cure, or prevent disease.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="family">
+  <div class="wrap">
+    <div class="grid">
+      <div class="card reveal">
+        <div class="cp">
+          <div class="pill">👨‍👩‍👧‍👦 One device. Every generation.</div>
+          <h2>Built for the whole family</h2>
+          <p>Non-invasive design. Adjustable intensity. Multi-user. Fuse-protected. A household wellness platform.</p>
+          <div class="list">
+            <div class="li"><div class="tick">🧑</div><div><strong>Teens & athletes</strong><div class="kicker">Recovery after sport + relaxation after study/screen time.</div></div></div>
+            <div class="li"><div class="tick">💼</div><div><strong>Working adults</strong><div class="kicker">Decompress after desk days. Support sleep routines. Reset after training.</div></div></div>
+            <div class="li"><div class="tick">👴</div><div><strong>Older adults</strong><div class="kicker">Gentle warmth + circulation support. Adjustable for comfort.</div></div></div>
+          </div>
+          <div class="fine">If pregnant, nursing, using implanted devices, or managing medical conditions—consult a clinician before use.</div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="cp">
+          <h3>Premium build. Safety first.</h3>
+          <div class="list">
+            <div class="li"><div class="tick">✓</div><div><strong>T5A 250V safety fuse</strong><div class="kicker">Auto-disconnect protection built in.</div></div></div>
+            <div class="li"><div class="tick">✓</div><div><strong>304 stainless steel pedal</strong><div class="kicker">High-density brushed surface. Sized up to EU 47.</div></div></div>
+            <div class="li"><div class="tick">✓</div><div><strong>20 intensity levels</strong><div class="kicker">From gentle to powerful—every body finds its setting.</div></div></div>
+          </div>
+          <div class="ctas">
+            <a class="btn" href="#testimonials">Stories ↓</a>
+            <a class="btn btnP" href="#book">Book</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="cp">
+        <div class="pill">⭐ Experiences</div>
+        <h2>What people feel after a session</h2>
+        <p>(These are strong, compliant templates. Replace with your real client quotes anytime.)</p>
+        <div class="grid3">
+          <div class="tcard">
+            <div class="stars">★★★★★</div>
+            <p style="font-size:15px;line-height:1.65;">"After my first session, I stood up and my hips and knees felt noticeably looser—like my body finally warmed through. I slept deeper that night and woke up less tight. Now it’s my non-negotiable reset."</p>
+            <div class="tname">— Marissa, 58 · Mobility & stiffness</div>
+          </div>
+          <div class="tcard">
+            <div class="stars">★★★★★</div>
+            <p style="font-size:15px;line-height:1.65;">"The warmth didn’t just stay in my feet—it spread up my legs and I felt more awake and calm at the same time. It’s like a whole-body recharge without caffeine."</p>
+            <div class="tname">— Daniel, 41 · Energy & circulation</div>
+          </div>
+          <div class="tcard">
+            <div class="stars">★★★★★</div>
+            <p style="font-size:15px;line-height:1.65;">"Within minutes I felt my nervous system downshift. That night my sleep was the best in weeks. It feels like flipping from stress mode into recovery."</p>
+            <div class="tname">— Priya, 34 · Sleep & stress</div>
+          </div>
+        </div>
+        <div class="ctas">
+          <a class="btn" href="#roi">ROI ↓</a>
+          <a class="btn btnP" href="#book">Book free session</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roi">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="cp">
+        <div class="pill">💰 Sessions first → device later</div>
+        <h2>One investment. Multi-user. High value per use.</h2>
+        <p>Start with sessions. If you love it, device ownership becomes the highest-leverage option because the whole household can use it.</p>
+        <div class="grid2">
+          <div class="li"><div class="tick">✓</div><div><strong>Household leverage</strong><div class="kicker">More users = lower cost per session.</div></div></div>
+          <div class="li"><div class="tick">✓</div><div><strong>Consistency wins</strong><div class="kicker">Easy routine = repeatable results.</div></div></div>
+          <div class="li"><div class="tick">✓</div><div><strong>Time ROI</strong><div class="kicker">Use it while watching TV, reading, or winding down.</div></div></div>
+          <div class="li"><div class="tick">✓</div><div><strong>Stacked platform</strong><div class="kicker">Warmth + PEMF + THz + add-on devices.</div></div></div>
+        </div>
+        <div class="ctas">
+          <a class="btn btnP" href="#book">Book a free session →</a>
+          <a class="btn" href="#top">Back to top ↑</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <div class="grid">
+      <div class="card reveal">
+        <div class="cp">
+          <div class="pill">📅 Booking</div>
+          <h2>Book your free session</h2>
+          <p><strong>Costa Mesa CA 92626</strong> · Iron Butterfly Coaching</p>
+          <div class="list">
+            <div class="li"><div class="tick">✓</div><div><strong>15–30 min guided session</strong><div class="kicker">Intensity tailored to your comfort.</div></div></div>
+            <div class="li"><div class="tick">✓</div><div><strong>Optional add-on demo</strong><div class="kicker">Massager + beauty device walkthrough if you want it.</div></div></div>
+            <div class="li"><div class="tick">✓</div><div><strong>No pressure</strong><div class="kicker">Sessions first. Device later—only if it fits.</div></div></div>
+          </div>
+          <div class="ctas">
+            <a class="btn btnP" href="https://cal.com/sabrinafan" target="_blank" rel="noopener" style="font-size:16px;padding:16px 24px;">Open booking calendar →</a>
+          </div>
+          <div class="fine">Wellness support technology. Not medical advice. Individual experiences vary.</div>
+        </div>
+      </div>
+
+      <div class="calWrap reveal">
+        <div class="calHeader">
+          <h3 style="margin:0 0 4px;">Book a free session</h3>
+          <p style="margin:0;font-size:13px;">Iron Butterfly Coaching · Costa Mesa CA 92626</p>
+        </div>
+        <div class="calBody">
+          <iframe src="https://cal.com/sabrinafan"></iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="min-height:auto;padding:40px 20px 120px;">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="cp">
+        <h2>FAQ</h2>
+        <div class="list">
+          <div class="li"><div class="tick">?</div><div><strong>Is it safe for the whole family?</strong><div class="kicker">Designed to be non-invasive with adjustable intensity and fuse protection. Consult a clinician if you have implants or medical conditions.</div></div></div>
+          <div class="li"><div class="tick">?</div><div><strong>Is it like a sauna?</strong><div class="kicker">Sauna heats via ambient temperature. The P90+ creates an internal warming effect through the feet with balanced energy release.</div></div></div>
+          <div class="li"><div class="tick">?</div><div><strong>Do I need to buy the device after the session?</strong><div class="kicker">No. Sessions first—always. Ownership is only discussed if it truly fits you.</div></div></div>
+        </div>
+        <div class="ctas" style="margin-top:20px;">
+          <a class="btn btnP" href="#book">Book your free session →</a>
+          <a class="btn" href="#top">Back to top ↑</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const p=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+    document.getElementById('progress').style.width=p+'%';
+  });
+  const els=document.querySelectorAll('.reveal');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+  },{threshold:0.1});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
