@@ -11,6 +11,7 @@ import {
 // ─── Design tokens ──────────────────────────────────────────────────────────
 const ACCENT = "#79F2C0";
 const ACCENT2 = "#6BA7FF";
+const ACCENT3 = "#C084FC"; // purple for peptides
 const TEXT = "#EAF2FF";
 const MUTED = "rgba(234,242,255,0.72)";
 const BG_DARK = "#050A10";
@@ -37,9 +38,10 @@ const Background: React.FC = () => (
   <AbsoluteFill
     style={{
       background: `
-        radial-gradient(ellipse 120% 60% at 20% -5%, rgba(107,167,255,0.30) 0%, transparent 60%),
-        radial-gradient(ellipse 100% 55% at 85% 15%, rgba(121,242,192,0.25) 0%, transparent 55%),
-        radial-gradient(ellipse 90% 50% at 55% 105%, rgba(255,211,107,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 120% 60% at 20% -5%, rgba(107,167,255,0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 55% at 85% 15%, rgba(121,242,192,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 45% at 10% 80%, rgba(192,132,252,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 50% at 55% 105%, rgba(255,211,107,0.10) 0%, transparent 55%),
         linear-gradient(180deg, ${BG_DARK} 0%, #061018 50%, #071826 100%)
       `,
     }}
@@ -57,7 +59,8 @@ const FloatingOrbs: React.FC<{ frame: number }> = ({ frame }) => {
     left: string,
     size: number,
     y: number,
-    opacity = 0.35
+    color = "rgba(107,167,255,0.20)",
+    opacity = 0.30
   ): React.CSSProperties => ({
     position: "absolute",
     top,
@@ -65,8 +68,7 @@ const FloatingOrbs: React.FC<{ frame: number }> = ({ frame }) => {
     width: size,
     height: size,
     borderRadius: "50%",
-    background:
-      "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.40), rgba(107,167,255,0.20) 55%, transparent 80%)",
+    background: `radial-gradient(circle at 35% 35%, rgba(255,255,255,0.35), ${color} 55%, transparent 80%)`,
     filter: "blur(1px)",
     mixBlendMode: "screen",
     opacity,
@@ -75,31 +77,31 @@ const FloatingOrbs: React.FC<{ frame: number }> = ({ frame }) => {
 
   return (
     <>
-      <div style={orbStyle("8%", "5%", 260, y1, 0.32)} />
-      <div style={orbStyle("42%", "60%", 320, y2, 0.28)} />
-      <div style={orbStyle("72%", "10%", 200, y3, 0.22)} />
+      <div style={orbStyle("8%", "5%", 260, y1, "rgba(107,167,255,0.22)", 0.30)} />
+      <div style={orbStyle("42%", "60%", 300, y2, "rgba(121,242,192,0.20)", 0.26)} />
+      <div style={orbStyle("72%", "10%", 200, y3, "rgba(192,132,252,0.18)", 0.22)} />
     </>
   );
 };
 
 // ─── Pill badge ──────────────────────────────────────────────────────────────
-const Pill: React.FC<{ children: React.ReactNode; opacity: number }> = ({
+const Pill: React.FC<{ children: React.ReactNode; opacity?: number }> = ({
   children,
-  opacity,
+  opacity = 1,
 }) => (
   <div
     style={{
       display: "inline-flex",
       alignItems: "center",
       gap: 10,
-      padding: "10px 20px",
+      padding: "10px 22px",
       borderRadius: 999,
       background: "rgba(255,255,255,0.07)",
       border: "1px solid rgba(255,255,255,0.14)",
       color: MUTED,
       fontSize: 26,
       fontWeight: 600,
-      letterSpacing: 1,
+      letterSpacing: 0.8,
       opacity,
     }}
   >
@@ -107,14 +109,22 @@ const Pill: React.FC<{ children: React.ReactNode; opacity: number }> = ({
   </div>
 );
 
-// ─── Section 1 · Brand intro (0–2s = frames 0-60) ───────────────────────────
+// ─── Section 1 · Brand intro (0–2s = frames 0–60) ────────────────────────────
 const IntroSection: React.FC<{ frame: number; fps: number }> = ({
   frame,
   fps,
 }) => {
   const logoScale = spring({ frame, fps, config: { damping: 12, stiffness: 60 } });
-  const tagOpacity = fadeIn(frame, 20, 25);
-  const subOpacity = fadeIn(frame, 38, 20);
+  const pill1Opacity = fadeIn(frame, 18, 22);
+  const pill2Opacity = fadeIn(frame, 30, 22);
+  const pill3Opacity = fadeIn(frame, 42, 22);
+  const subOpacity = fadeIn(frame, 52, 18);
+
+  const pillData = [
+    { label: "⚡ PEMF Sessions", opacity: pill1Opacity },
+    { label: "🧬 Peptides", opacity: pill2Opacity },
+    { label: "🌿 Health Coaching", opacity: pill3Opacity },
+  ];
 
   return (
     <AbsoluteFill
@@ -123,7 +133,7 @@ const IntroSection: React.FC<{ frame: number; fps: number }> = ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 32,
+        gap: 28,
         padding: "0 60px",
         textAlign: "center",
         fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif",
@@ -150,7 +160,7 @@ const IntroSection: React.FC<{ frame: number; fps: number }> = ({
         <span
           style={{
             color: TEXT,
-            fontSize: 48,
+            fontSize: 46,
             fontWeight: 800,
             letterSpacing: -1,
           }}
@@ -159,269 +169,159 @@ const IntroSection: React.FC<{ frame: number; fps: number }> = ({
         </span>
       </div>
 
-      <div style={{ opacity: tagOpacity }}>
-        <Pill opacity={1}>
-          ⚡ PEMF · Internal Thermal Circulation
-        </Pill>
+      {/* Three service pills */}
+      <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}>
+        {pillData.map(({ label, opacity }) => (
+          <Pill key={label} opacity={opacity}>
+            {label}
+          </Pill>
+        ))}
       </div>
 
       <p
         style={{
           color: MUTED,
-          fontSize: 34,
+          fontSize: 32,
           lineHeight: 1.5,
           margin: 0,
           opacity: subOpacity,
           maxWidth: 780,
         }}
       >
-        Costa Mesa, CA · Free session available
+        Costa Mesa, CA · Whole-body wellness
       </p>
     </AbsoluteFill>
   );
 };
 
-// ─── Section 2 · Device reveal (2–5s = frames 60-150) ────────────────────────
-const DeviceSection: React.FC<{ frame: number; fps: number }> = ({
-  frame,
-  fps,
-}) => {
-  const titleSlide = slideUp(frame, fps, 0, { damping: 13, stiffness: 70 });
-  const cardOpacity = fadeIn(frame, 15, 25);
-  const cardScale = interpolate(frame, [15, 40], [0.92, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+// ─── Section 2 · Three-service overview (2–6s = frames 60–180) ───────────────
+interface ServiceCard {
+  icon: string;
+  title: string;
+  subtitle: string;
+  points: string[];
+  accent: string;
+}
 
-  const gradientLine = (
-    <div
-      style={{
-        height: 2,
-        background: `linear-gradient(90deg, transparent, ${ACCENT}, ${ACCENT2}, transparent)`,
-        borderRadius: 1,
-        margin: "20px 0",
-        opacity: fadeIn(frame, 10, 20),
-      }}
-    />
-  );
+const SERVICES: ServiceCard[] = [
+  {
+    icon: "⚡",
+    title: "PEMF Sessions",
+    subtitle: "Tera-P90+ Internal Thermal",
+    points: ["Deep internal warmth via feet", "20 intensity levels", "Fully clothed & comfortable"],
+    accent: ACCENT,
+  },
+  {
+    icon: "🧬",
+    title: "Peptide Protocols",
+    subtitle: "Targeted wellness support",
+    points: ["Personalized peptide guidance", "Cellular vitality & recovery", "Cutting-edge wellness science"],
+    accent: ACCENT3,
+  },
+  {
+    icon: "🌿",
+    title: "Health Coaching",
+    subtitle: "1-on-1 consulting",
+    points: ["Custom wellness roadmap", "Nutrition & lifestyle guidance", "Ongoing accountability"],
+    accent: ACCENT2,
+  },
+];
+
+const ServiceCardComponent: React.FC<{
+  service: ServiceCard;
+  frame: number;
+  fps: number;
+  delay: number;
+}> = ({ service, frame, fps, delay }) => {
+  const progress = spring({
+    frame: frame - delay,
+    fps,
+    config: { damping: 14, stiffness: 72 },
+  });
+  const opacity = fadeIn(frame, delay, 20);
+  const translateY = interpolate(progress, [0, 1], [90, 0]);
 
   return (
-    <AbsoluteFill
+    <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "0 60px",
-        fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+        padding: "28px 30px",
+        borderRadius: 28,
+        background: "rgba(255,255,255,0.055)",
+        border: `1px solid ${service.accent}33`,
+        backdropFilter: "blur(14px)",
+        opacity,
+        transform: `translateY(${translateY}px)`,
       }}
     >
-      {/* Big device name */}
-      <div
-        style={{
-          transform: `translateY(${interpolate(titleSlide, [0, 1], [60, 0])}px)`,
-          textAlign: "center",
-          marginBottom: 40,
-        }}
-      >
-        <p
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 16 }}>
+        <div
           style={{
-            color: ACCENT,
+            width: 58,
+            height: 58,
+            flexShrink: 0,
+            borderRadius: 16,
+            background: `linear-gradient(135deg, ${service.accent}30, ${service.accent}15)`,
+            border: `1px solid ${service.accent}44`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             fontSize: 28,
-            fontWeight: 700,
-            letterSpacing: 4,
-            margin: 0,
-            textTransform: "uppercase",
           }}
         >
-          Introducing
-        </p>
-        <h1
-          style={{
-            color: TEXT,
-            fontSize: 88,
-            fontWeight: 900,
-            margin: "8px 0 0",
-            letterSpacing: -2,
-            lineHeight: 1.0,
-            background: `linear-gradient(135deg, ${TEXT} 30%, ${ACCENT2} 100%)`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          Tera‑P90+
-        </h1>
-        {gradientLine}
-        <p
-          style={{
-            color: MUTED,
-            fontSize: 38,
-            margin: 0,
-            lineHeight: 1.4,
-            fontWeight: 500,
-          }}
-        >
-          Internal heat penetration—
-          <br />
-          <em>without</em> the sauna.
-        </p>
+          {service.icon}
+        </div>
+        <div>
+          <div style={{ color: TEXT, fontSize: 32, fontWeight: 800, letterSpacing: -0.4 }}>
+            {service.title}
+          </div>
+          <div style={{ color: service.accent, fontSize: 22, fontWeight: 600, marginTop: 2 }}>
+            {service.subtitle}
+          </div>
+        </div>
       </div>
 
-      {/* Spec chips */}
-      <div
-        style={{
-          display: "flex",
-          gap: 18,
-          flexWrap: "wrap",
-          justifyContent: "center",
-          opacity: cardOpacity,
-          transform: `scale(${cardScale})`,
-        }}
-      >
-        {[
-          { val: "20", label: "Intensity\nLevels" },
-          { val: "3–5cm", label: "Deep\nPenetration" },
-          { val: "1MHz", label: "Pulse\nCurrent" },
-        ].map(({ val, label }) => (
+      {/* Points */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {service.points.map((pt) => (
           <div
-            key={val}
+            key={pt}
             style={{
-              padding: "22px 30px",
-              borderRadius: 24,
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.14)",
-              textAlign: "center",
-              minWidth: 180,
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              color: MUTED,
+              fontSize: 24,
+              lineHeight: 1.4,
             }}
           >
             <div
               style={{
-                fontSize: 52,
-                fontWeight: 800,
-                color: ACCENT,
-                letterSpacing: -1,
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: service.accent,
+                flexShrink: 0,
               }}
-            >
-              {val}
-            </div>
-            <div
-              style={{
-                fontSize: 24,
-                color: MUTED,
-                marginTop: 6,
-                whiteSpace: "pre-line",
-                lineHeight: 1.3,
-              }}
-            >
-              {label}
-            </div>
+            />
+            {pt}
           </div>
         ))}
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-// ─── Section 3 · Benefits (5–9s = frames 150-270) ────────────────────────────
-interface Benefit {
-  icon: string;
-  title: string;
-  desc: string;
-}
-
-const BENEFITS: Benefit[] = [
-  {
-    icon: "🔥",
-    title: "Deep Relaxation",
-    desc: "Muscles release. Tension drops. Body shifts into recovery mode.",
-  },
-  {
-    icon: "🩸",
-    title: "Circulation Support",
-    desc: "Vasodilation + blood flow—especially for cold hands and feet.",
-  },
-  {
-    icon: "💤",
-    title: "Sleep Support",
-    desc: "Many use it as a pre-bed ritual to unwind and sleep deeper.",
-  },
-];
-
-const BenefitCard: React.FC<{
-  benefit: Benefit;
-  frame: number;
-  fps: number;
-  delay: number;
-}> = ({ benefit, frame, fps, delay }) => {
-  const progress = spring({
-    frame: frame - delay,
-    fps,
-    config: { damping: 14, stiffness: 75 },
-  });
-  const opacity = fadeIn(frame, delay, 18);
-  const translateY = interpolate(progress, [0, 1], [80, 0]);
-
-  return (
-    <div
-      style={{
-        padding: "28px 32px",
-        borderRadius: 28,
-        background: "rgba(255,255,255,0.06)",
-        border: "1px solid rgba(255,255,255,0.13)",
-        backdropFilter: "blur(14px)",
-        opacity,
-        transform: `translateY(${translateY}px)`,
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 24,
-      }}
-    >
-      <div
-        style={{
-          width: 64,
-          height: 64,
-          flexShrink: 0,
-          borderRadius: 18,
-          background: `linear-gradient(135deg, rgba(121,242,192,0.22), rgba(107,167,255,0.20))`,
-          border: "1px solid rgba(255,255,255,0.14)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 32,
-        }}
-      >
-        {benefit.icon}
-      </div>
-      <div>
-        <div
-          style={{
-            color: TEXT,
-            fontSize: 36,
-            fontWeight: 700,
-            marginBottom: 8,
-            letterSpacing: -0.3,
-          }}
-        >
-          {benefit.title}
-        </div>
-        <div style={{ color: MUTED, fontSize: 27, lineHeight: 1.45 }}>
-          {benefit.desc}
-        </div>
       </div>
     </div>
   );
 };
 
-const BenefitsSection: React.FC<{ frame: number; fps: number }> = ({
+const ServicesSection: React.FC<{ frame: number; fps: number }> = ({
   frame,
   fps,
 }) => {
-  const headerOpacity = fadeIn(frame, 0, 20);
   const headerY = interpolate(
     spring({ frame, fps, config: { damping: 14, stiffness: 70 } }),
     [0, 1],
     [40, 0]
   );
+  const headerOpacity = fadeIn(frame, 0, 20);
 
   return (
     <AbsoluteFill
@@ -429,8 +329,8 @@ const BenefitsSection: React.FC<{ frame: number; fps: number }> = ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        padding: "0 60px",
-        gap: 28,
+        padding: "0 56px",
+        gap: 22,
         fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif",
       }}
     >
@@ -438,40 +338,270 @@ const BenefitsSection: React.FC<{ frame: number; fps: number }> = ({
         style={{
           opacity: headerOpacity,
           transform: `translateY(${headerY}px)`,
-          marginBottom: 8,
+          marginBottom: 4,
         }}
       >
-        <Pill opacity={1}>💎 What you'll actually feel</Pill>
+        <Pill>✦ Three ways to transform</Pill>
         <h2
           style={{
             color: TEXT,
-            fontSize: 60,
+            fontSize: 56,
             fontWeight: 800,
-            margin: "18px 0 0",
+            margin: "14px 0 0",
             letterSpacing: -1.2,
             lineHeight: 1.1,
           }}
         >
-          Benefits people
+          Your complete
           <br />
-          come back for
+          wellness platform
         </h2>
       </div>
 
-      {BENEFITS.map((b, i) => (
-        <BenefitCard
-          key={b.title}
-          benefit={b}
+      {SERVICES.map((s, i) => (
+        <ServiceCardComponent
+          key={s.title}
+          service={s}
           frame={frame}
           fps={fps}
-          delay={i * 15 + 12}
+          delay={i * 18 + 14}
         />
       ))}
     </AbsoluteFill>
   );
 };
 
-// ─── Section 4 · Testimonial quote (9–12s = frames 270-360) ──────────────────
+// ─── Section 3 · Peptide spotlight (6–9s = frames 180–270) ───────────────────
+const PeptideSection: React.FC<{ frame: number; fps: number }> = ({
+  frame,
+  fps,
+}) => {
+  const titleSlide = slideUp(frame, fps, 0, { damping: 13, stiffness: 68 });
+  const titleY = interpolate(titleSlide, [0, 1], [60, 0]);
+
+  const items = [
+    { icon: "🔬", title: "Science-backed protocols", desc: "Guidance rooted in emerging peptide wellness research." },
+    { icon: "🎯", title: "Targeted support", desc: "Recovery, vitality, sleep, and metabolic wellness." },
+    { icon: "👤", title: "Personalized to you", desc: "Your goals, your body, your custom roadmap." },
+  ];
+
+  return (
+    <AbsoluteFill
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "0 58px",
+        gap: 28,
+        fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+      }}
+    >
+      <div style={{ transform: `translateY(${titleY}px)`, opacity: fadeIn(frame, 0, 20) }}>
+        <div
+          style={{
+            display: "inline-block",
+            padding: "8px 18px",
+            borderRadius: 999,
+            background: `${ACCENT3}22`,
+            border: `1px solid ${ACCENT3}44`,
+            color: ACCENT3,
+            fontSize: 26,
+            fontWeight: 700,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            marginBottom: 14,
+          }}
+        >
+          🧬 Peptide Protocols
+        </div>
+        <h2
+          style={{
+            color: TEXT,
+            fontSize: 64,
+            fontWeight: 900,
+            margin: 0,
+            letterSpacing: -1.4,
+            lineHeight: 1.05,
+          }}
+        >
+          Wellness at the
+          <br />
+          <span
+            style={{
+              background: `linear-gradient(135deg, ${ACCENT3}, ${ACCENT2})`,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            cellular level.
+          </span>
+        </h2>
+      </div>
+
+      {items.map(({ icon, title, desc }, i) => (
+        <div
+          key={title}
+          style={{
+            display: "flex",
+            gap: 20,
+            alignItems: "flex-start",
+            opacity: fadeIn(frame, i * 14 + 16, 18),
+            transform: `translateY(${interpolate(
+              spring({ frame: frame - (i * 14 + 16), fps, config: { damping: 14, stiffness: 75 } }),
+              [0, 1],
+              [50, 0]
+            )}px)`,
+            padding: "22px 26px",
+            borderRadius: 22,
+            background: "rgba(255,255,255,0.055)",
+            border: `1px solid ${ACCENT3}28`,
+          }}
+        >
+          <div
+            style={{
+              width: 52,
+              height: 52,
+              flexShrink: 0,
+              borderRadius: 14,
+              background: `linear-gradient(135deg, ${ACCENT3}28, ${ACCENT2}18)`,
+              border: `1px solid ${ACCENT3}38`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 26,
+            }}
+          >
+            {icon}
+          </div>
+          <div>
+            <div style={{ color: TEXT, fontSize: 32, fontWeight: 700, letterSpacing: -0.3, marginBottom: 6 }}>
+              {title}
+            </div>
+            <div style={{ color: MUTED, fontSize: 25, lineHeight: 1.45 }}>{desc}</div>
+          </div>
+        </div>
+      ))}
+    </AbsoluteFill>
+  );
+};
+
+// ─── Section 4 · Coaching spotlight (9–12s = frames 270–360) ─────────────────
+const CoachingSection: React.FC<{ frame: number; fps: number }> = ({
+  frame,
+  fps,
+}) => {
+  const titleSlide = slideUp(frame, fps, 0, { damping: 13, stiffness: 68 });
+  const titleY = interpolate(titleSlide, [0, 1], [60, 0]);
+
+  const steps = [
+    { num: "01", title: "Discovery call", desc: "We map your health history, goals, and lifestyle." },
+    { num: "02", title: "Custom plan", desc: "PEMF sessions + peptide guidance + nutrition strategy." },
+    { num: "03", title: "Ongoing support", desc: "Accountability check-ins and protocol adjustments." },
+  ];
+
+  return (
+    <AbsoluteFill
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "0 58px",
+        gap: 26,
+        fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+      }}
+    >
+      <div style={{ transform: `translateY(${titleY}px)`, opacity: fadeIn(frame, 0, 20) }}>
+        <div
+          style={{
+            display: "inline-block",
+            padding: "8px 18px",
+            borderRadius: 999,
+            background: `${ACCENT2}22`,
+            border: `1px solid ${ACCENT2}44`,
+            color: ACCENT2,
+            fontSize: 26,
+            fontWeight: 700,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            marginBottom: 14,
+          }}
+        >
+          🌿 Health Coaching
+        </div>
+        <h2
+          style={{
+            color: TEXT,
+            fontSize: 62,
+            fontWeight: 900,
+            margin: 0,
+            letterSpacing: -1.3,
+            lineHeight: 1.05,
+          }}
+        >
+          Your guide to
+          <br />
+          <span
+            style={{
+              background: `linear-gradient(135deg, ${ACCENT2}, ${ACCENT})`,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            lasting results.
+          </span>
+        </h2>
+      </div>
+
+      {steps.map(({ num, title, desc }, i) => (
+        <div
+          key={num}
+          style={{
+            display: "flex",
+            gap: 22,
+            alignItems: "flex-start",
+            opacity: fadeIn(frame, i * 16 + 16, 18),
+            transform: `translateY(${interpolate(
+              spring({ frame: frame - (i * 16 + 16), fps, config: { damping: 14, stiffness: 75 } }),
+              [0, 1],
+              [55, 0]
+            )}px)`,
+            padding: "22px 26px",
+            borderRadius: 22,
+            background: "rgba(255,255,255,0.055)",
+            border: `1px solid ${ACCENT2}28`,
+          }}
+        >
+          <div
+            style={{
+              width: 52,
+              height: 52,
+              flexShrink: 0,
+              borderRadius: 14,
+              background: `linear-gradient(135deg, ${ACCENT2}28, ${ACCENT}18)`,
+              border: `1px solid ${ACCENT2}40`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: ACCENT2,
+              fontSize: 22,
+              fontWeight: 800,
+            }}
+          >
+            {num}
+          </div>
+          <div>
+            <div style={{ color: TEXT, fontSize: 32, fontWeight: 700, letterSpacing: -0.3, marginBottom: 6 }}>
+              {title}
+            </div>
+            <div style={{ color: MUTED, fontSize: 25, lineHeight: 1.45 }}>{desc}</div>
+          </div>
+        </div>
+      ))}
+    </AbsoluteFill>
+  );
+};
+
+// ─── Section 5 · Testimonial (12–15s = frames 360–450) ───────────────────────
 const TestimonialSection: React.FC<{ frame: number; fps: number }> = ({
   frame,
   fps,
@@ -479,8 +609,6 @@ const TestimonialSection: React.FC<{ frame: number; fps: number }> = ({
   const quoteSlide = spring({ frame, fps, config: { damping: 13, stiffness: 60 } });
   const quoteY = interpolate(quoteSlide, [0, 1], [70, 0]);
   const opacity = fadeIn(frame, 0, 22);
-
-  // Typing cursor blink
   const cursor = frame % 30 < 15 ? "|" : "";
 
   return (
@@ -501,12 +629,10 @@ const TestimonialSection: React.FC<{ frame: number; fps: number }> = ({
           textAlign: "center",
         }}
       >
-        {/* Stars */}
         <div style={{ color: ACCENT, fontSize: 52, marginBottom: 24, letterSpacing: 4 }}>
           ★★★★★
         </div>
 
-        {/* Quote card */}
         <div
           style={{
             padding: "50px 52px",
@@ -521,7 +647,7 @@ const TestimonialSection: React.FC<{ frame: number; fps: number }> = ({
           <p
             style={{
               color: TEXT,
-              fontSize: 36,
+              fontSize: 35,
               lineHeight: 1.65,
               margin: 0,
               fontStyle: "italic",
@@ -535,13 +661,7 @@ const TestimonialSection: React.FC<{ frame: number; fps: number }> = ({
           </p>
         </div>
 
-        <div
-          style={{
-            color: MUTED,
-            fontSize: 28,
-            fontWeight: 600,
-          }}
-        >
+        <div style={{ color: MUTED, fontSize: 28, fontWeight: 600 }}>
           — Marissa, 58 · Mobility & Stiffness
         </div>
       </div>
@@ -549,25 +669,22 @@ const TestimonialSection: React.FC<{ frame: number; fps: number }> = ({
   );
 };
 
-// ─── Section 5 · CTA (12–15s = frames 360-450) ───────────────────────────────
+// ─── Section 6 · CTA (15–20s = frames 450–600) ───────────────────────────────
 const CTASection: React.FC<{ frame: number; fps: number }> = ({
   frame,
   fps,
 }) => {
-  const scaleProgress = spring({
-    frame,
-    fps,
-    config: { damping: 12, stiffness: 65 },
-  });
+  const scaleProgress = spring({ frame, fps, config: { damping: 12, stiffness: 65 } });
   const scale = interpolate(scaleProgress, [0, 1], [0.88, 1]);
   const opacity = fadeIn(frame, 0, 22);
 
-  // Pulsing glow on CTA button
-  const glow = interpolate(
-    Math.sin((frame / 30) * Math.PI),
-    [-1, 1],
-    [0.5, 1.0]
-  );
+  const glow = interpolate(Math.sin((frame / 30) * Math.PI), [-1, 1], [0.5, 1.0]);
+
+  const offerings = [
+    { icon: "⚡", label: "PEMF Sessions", color: ACCENT },
+    { icon: "🧬", label: "Peptide Protocols", color: ACCENT3 },
+    { icon: "🌿", label: "Health Coaching", color: ACCENT2 },
+  ];
 
   return (
     <AbsoluteFill
@@ -577,31 +694,30 @@ const CTASection: React.FC<{ frame: number; fps: number }> = ({
         alignItems: "center",
         justifyContent: "center",
         padding: "0 60px",
-        gap: 36,
+        gap: 28,
         fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif",
         textAlign: "center",
         opacity,
         transform: `scale(${scale})`,
       }}
     >
-      {/* Heading */}
       <div>
         <p
           style={{
             color: ACCENT,
-            fontSize: 30,
+            fontSize: 28,
             fontWeight: 700,
             letterSpacing: 3,
             margin: "0 0 12px",
             textTransform: "uppercase",
           }}
         >
-          Ready to feel the difference?
+          Ready to start?
         </p>
         <h2
           style={{
             color: TEXT,
-            fontSize: 74,
+            fontSize: 70,
             fontWeight: 900,
             margin: 0,
             letterSpacing: -1.5,
@@ -622,34 +738,57 @@ const CTASection: React.FC<{ frame: number; fps: number }> = ({
         </h2>
       </div>
 
-      {/* Details */}
+      {/* Service chips */}
+      <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+        {offerings.map(({ icon, label, color }) => (
+          <div
+            key={label}
+            style={{
+              padding: "12px 22px",
+              borderRadius: 999,
+              background: `${color}18`,
+              border: `1px solid ${color}44`,
+              color,
+              fontSize: 26,
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            {icon} {label}
+          </div>
+        ))}
+      </div>
+
+      {/* Location card */}
       <div
         style={{
-          padding: "28px 36px",
+          padding: "26px 34px",
           borderRadius: 24,
           background: "rgba(255,255,255,0.05)",
           border: "1px solid rgba(255,255,255,0.12)",
           width: "100%",
         }}
       >
-        <div style={{ color: TEXT, fontSize: 32, fontWeight: 700 }}>
+        <div style={{ color: TEXT, fontSize: 30, fontWeight: 700 }}>
           Iron Butterfly Coaching
         </div>
-        <div style={{ color: MUTED, fontSize: 26, marginTop: 8, lineHeight: 1.5 }}>
+        <div style={{ color: MUTED, fontSize: 25, marginTop: 8, lineHeight: 1.5 }}>
           📍 Costa Mesa CA 92626
           <br />
-          15–30 min guided session · No pressure
+          Free intro session · No pressure · 1-on-1
         </div>
       </div>
 
       {/* CTA Button */}
       <div
         style={{
-          padding: "32px 64px",
+          padding: "30px 60px",
           borderRadius: 999,
           background: `linear-gradient(135deg, rgba(121,242,192,0.95), rgba(107,167,255,0.95))`,
           color: "#041019",
-          fontSize: 40,
+          fontSize: 38,
           fontWeight: 800,
           letterSpacing: -0.5,
           boxShadow: `0 20px 70px rgba(107,167,255,${0.25 * glow}), 0 16px 55px rgba(121,242,192,${0.20 * glow})`,
@@ -659,34 +798,33 @@ const CTASection: React.FC<{ frame: number; fps: number }> = ({
         cal.com/sabrinafan →
       </div>
 
-      {/* Disclaimer */}
       <p
         style={{
-          color: "rgba(234,242,255,0.40)",
-          fontSize: 22,
+          color: "rgba(234,242,255,0.38)",
+          fontSize: 21,
           lineHeight: 1.5,
           margin: 0,
         }}
       >
-        Wellness support technology. Not medical advice.
-        <br />
-        Individual experiences vary.
+        Wellness support. Not medical advice. Individual results vary.
       </p>
     </AbsoluteFill>
   );
 };
 
 // ─── Root composition ─────────────────────────────────────────────────────────
+// Total: 600 frames at 30fps = 20 seconds
+//
+// 0–60    (0–2s)   Intro: brand + three service pills
+// 60–180  (2–6s)   Services overview: 3 cards
+// 180–270 (6–9s)   Peptide spotlight
+// 270–360 (9–12s)  Coaching spotlight
+// 360–450 (12–15s) Testimonial
+// 450–600 (15–20s) CTA
+
 export const IronButterflyAd: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
-  // Section timing (at 30 fps):
-  // 0-60   → Intro (0–2s)
-  // 60-150 → Device reveal (2–5s)
-  // 150-270→ Benefits (5–9s)
-  // 270-360→ Testimonial (9–12s)
-  // 360-450→ CTA (12–15s)
 
   return (
     <AbsoluteFill style={{ background: BG_DARK }}>
@@ -697,20 +835,24 @@ export const IronButterflyAd: React.FC = () => {
         <IntroSection frame={frame} fps={fps} />
       </Sequence>
 
-      <Sequence from={60} durationInFrames={90}>
-        <DeviceSection frame={frame - 60} fps={fps} />
+      <Sequence from={60} durationInFrames={120}>
+        <ServicesSection frame={frame - 60} fps={fps} />
       </Sequence>
 
-      <Sequence from={150} durationInFrames={120}>
-        <BenefitsSection frame={frame - 150} fps={fps} />
+      <Sequence from={180} durationInFrames={90}>
+        <PeptideSection frame={frame - 180} fps={fps} />
       </Sequence>
 
       <Sequence from={270} durationInFrames={90}>
-        <TestimonialSection frame={frame - 270} fps={fps} />
+        <CoachingSection frame={frame - 270} fps={fps} />
       </Sequence>
 
       <Sequence from={360} durationInFrames={90}>
-        <CTASection frame={frame - 360} fps={fps} />
+        <TestimonialSection frame={frame - 360} fps={fps} />
+      </Sequence>
+
+      <Sequence from={450} durationInFrames={150}>
+        <CTASection frame={frame - 450} fps={fps} />
       </Sequence>
     </AbsoluteFill>
   );

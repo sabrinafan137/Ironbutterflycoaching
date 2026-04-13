@@ -2,8 +2,8 @@ import React from "react";
 import { Composition } from "remotion";
 import { IronButterflyAd } from "./compositions/IronButterflyAd";
 
-// Total duration: 450 frames at 30fps = 15 seconds
-const DURATION_IN_FRAMES = 450;
+// Total duration: 600 frames at 30fps = 20 seconds
+const DURATION_IN_FRAMES = 600;
 const FPS = 30;
 
 export const RemotionRoot: React.FC = () => {
