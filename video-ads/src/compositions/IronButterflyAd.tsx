@@ -161,7 +161,7 @@ const IntroSection: React.FC<{ frame: number; fps: number }> = ({
 
       <div style={{ opacity: tagOpacity }}>
         <Pill opacity={1}>
-          ⚡ PEMF · Terahertz · Internal Thermal
+          ⚡ PEMF · Internal Thermal Circulation
         </Pill>
       </div>
 
@@ -249,7 +249,7 @@ const DeviceSection: React.FC<{ frame: number; fps: number }> = ({
             WebkitTextFillColor: "transparent",
           }}
         >
-          THz Tera‑P90+
+          Tera‑P90+
         </h1>
         {gradientLine}
         <p
@@ -280,7 +280,7 @@ const DeviceSection: React.FC<{ frame: number; fps: number }> = ({
       >
         {[
           { val: "20", label: "Intensity\nLevels" },
-          { val: "3–5cm", label: "THz\nPenetration" },
+          { val: "3–5cm", label: "Deep\nPenetration" },
           { val: "1MHz", label: "Pulse\nCurrent" },
         ].map(({ val, label }) => (
           <div
