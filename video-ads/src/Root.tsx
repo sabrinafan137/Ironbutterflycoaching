@@ -1,42 +1,58 @@
 import React from "react";
 import { Composition } from "remotion";
 import { IronButterflyAd } from "./compositions/IronButterflyAd";
+import { IronButterflyReel } from "./compositions/IronButterflyReel";
+import { IronButterflyReel2 } from "./compositions/IronButterflyReel2";
 
-// Total duration: 600 frames at 30fps = 20 seconds
-const DURATION_IN_FRAMES = 600;
 const FPS = 30;
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      {/* Square / 1:1 version (Instagram feed) */}
+      {/* ── Evergreen brand ad ── */}
       <Composition
         id="IronButterflyAd"
         component={IronButterflyAd}
-        durationInFrames={DURATION_IN_FRAMES}
+        durationInFrames={600}
         fps={FPS}
         width={1080}
         height={1080}
       />
-
-      {/* Vertical / 9:16 version (Instagram Reels, TikTok, Stories) */}
       <Composition
         id="IronButterflyAd-Vertical"
         component={IronButterflyAd}
-        durationInFrames={DURATION_IN_FRAMES}
+        durationInFrames={600}
+        fps={FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="IronButterflyAd-Landscape"
+        component={IronButterflyAd}
+        durationInFrames={600}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+
+      {/* ── Talking-head reel · Hook A: "You're not tired. You're DEPLETED." ── */}
+      <Composition
+        id="IronButterflyReel-HookA"
+        component={IronButterflyReel}
+        durationInFrames={510}
         fps={FPS}
         width={1080}
         height={1920}
       />
 
-      {/* Landscape / 16:9 version (YouTube, Facebook) */}
+      {/* ── Talking-head reel · Hook B: "Doctors won't tell you this." ── */}
       <Composition
-        id="IronButterflyAd-Landscape"
-        component={IronButterflyAd}
-        durationInFrames={DURATION_IN_FRAMES}
+        id="IronButterflyReel-HookB"
+        component={IronButterflyReel2}
+        durationInFrames={450}
         fps={FPS}
-        width={1920}
-        height={1080}
+        width={1080}
+        height={1920}
       />
     </>
   );
