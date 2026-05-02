@@ -1,0 +1,22 @@
+{
+  "name": "iron-butterfly-video-ads",
+  "version": "1.0.0",
+  "description": "Remotion video ads for Iron Butterfly Coaching",
+  "scripts": {
+    "start": "npx remotion studio",
+    "build": "npx remotion render",
+    "render": "npx remotion render IronButterflyAd out/iron-butterfly-ad.mp4",
+    "render:vertical": "npx remotion render IronButterflyAd out/iron-butterfly-ad-vertical.mp4 --width 1080 --height 1920"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.290",
+    "remotion": "4.0.290",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.1",
+    "typescript": "5.4.5"
+  }
+}
